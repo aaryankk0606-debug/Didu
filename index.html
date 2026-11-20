@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little World for Isha 🌷</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  color:#754b5a;
+  background:#fff7f9;
+  overflow-x:hidden;
+}
+button{font-family:inherit;cursor:pointer}
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:25px;
+  background:
+    radial-gradient(circle at 10% 15%,#ffdfeb,transparent 40%),
+    radial-gradient(circle at 90% 85%,#f9d9e6,transparent 40%),
+    #fff7f9;
+}
+.hero-content{max-width:520px;animation:appear 1.2s}
+.hero h1,.script{
+  font-family:'Dancing Script',cursive;
+  color:#c45e82;
+}
+.hero h1{font-size:clamp(55px,12vw,85px);margin:12px 0}
+.hero p{line-height:1.9;font-size:15px;margin:15px 0 24px}
+.rose{font-size:65px;animation:float 3s infinite}
+.small{font-size:11px;letter-spacing:3px;color:#bd7992;font-weight:800}
+
+.btn{
+  display:inline-block;
+  background:#ce7292;
+  color:white;
+  border:0;
+  padding:14px 25px;
+  border-radius:30px;
+  font-weight:800;
+  box-shadow:0 7px 20px #edc0d0;
+  transition:.3s;
+  text-decoration:none;
+}
+.btn:hover{transform:translateY(-3px);background:#b85e80}
+
+#login input{
+  padding:15px;
+  border:1px solid #eab9cb;
+  border-radius:25px;
+  width:85%;
+  text-align:center;
+  outline:none;
+  font-size:16px;
+  background:white;
+  color:#754b5a;
+}
+#error{color:#c45e82;font-weight:800;min-height:25px}
+
+section{padding:70px 18px;text-align:center}
+.section-title{
+  font-family:'Dancing Script',cursive;
+  color:#c45e82;
+  font-size:clamp(36px,8vw,48px);
+  margin-bottom:10px;
+}
+.subtitle{font-size:13px;color:#a77b8a;margin-bottom:30px}
+
+.card{
+  max-width:480px;
+  margin:18px auto;
+  padding:27px 22px;
+  background:#fff;
+  border:1px solid #f6dce5;
+  border-radius:25px;
+  box-shadow:0 9px 28px #efd6df;
+}
+.card h3{color:#bf6685;margin:12px 0}
+.card p{font-size:14px;line-height:1.9}
+.emoji{font-size:48px;margin-bottom:10px}
+
+.letter{
+  max-width:520px;
+  margin:auto;
+  padding:28px 23px;
+  background:#fffaf1;
+  border:1px solid #f0dfca;
+  border-radius:13px;
+  text-align:left;
+  line-height:2;
+  box-shadow:0 8px 25px #e9d9d0;
+}
+.letter h2{
+  text-align:center;
+  font:36px 'Dancing Script',cursive;
+  color:#bd6481;
+  margin-bottom:18px;
+}
+.letter p{font-size:14px;margin-bottom:14px}
+.signature{
+  font:27px 'Dancing Script',cursive;
+  color:#c45e82;
+  text-align:right;
+}
+
+.mood-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+.mood-buttons button{
+  padding:12px 17px;
+  border:1px solid #f0c4d3;
+  border-radius:25px;
+  background:white;
+  color:#ad5878;
+  font-weight:800;
+}
+#mood-message{
+  display:none;
+  max-width:440px;
+  min-height:80px;
+  margin:23px auto;
+  padding:20px;
+  background:#ffe8ef;
+  border-radius:20px;
+  line-height:1.9;
+}
+
+.noodles{background:#fff0e5}
+.music{background:#f6effb}
+.birthday{background:linear-gradient(140deg,#ffe5ed,#fff7f9)}
+.gift-section{background:#fff1f5}
+
+#secret{
+  display:none;
+  max-width:450px;
+  margin:25px auto;
+  padding:25px;
+  border-radius:20px;
+  background:white;
+  box-shadow:0 8px 25px #eac9d4;
+  line-height:2;
+}
+.gift{
+  font-size:75px;
+  display:inline-block;
+  cursor:pointer;
+  animation:float 2s infinite;
+}
+.music-note{font-size:45px}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  max-width:450px;
+  margin:auto;
+}
+.photo-placeholder{
+  min-height:135px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  background:#ffe7ef;
+  padding:15px;
+  font-size:13px;
+  color:#ae6c84;
+}
+footer{
+  padding:35px 15px;
+  background:#f8dce6;
+  text-align:center;
+  font-size:13px;
+  line-height:2;
+}
+footer strong{color:#b9577c}
+
+.petal{
+  position:fixed;
+  top:-30px;
+  z-index:20;
+  pointer-events:none;
+  animation:fall linear forwards;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+@keyframes float{
+  50%{transform:translateY(-12px)}
+}
+@keyframes appear{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:480px){
+  section{padding:58px 16px}
+  .letter{padding:22px 17px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD LOGIN -->
+<div id="login" class="hero">
+  <div class="hero-content">
+    <div class="small">A SECRET LITTLE SURPRISE</div>
+    <div class="rose">🌹</div>
+    <h1>Hey Didu!</h1>
+    <p>
+      A little world has been created just for you.
+      <br>
+      Only my favourite Chipkali can enter! 🦎💗
+    </p>
+    <input id="password" type="password"
+      placeholder="Enter your secret password">
+    <br><br>
+    <button class="btn" onclick="unlock()">Unlock your surprise 💌</button>
+    <p id="error"></p>
+    <small>Hint: A special word 😉</small>
+  </div>
+</div>
+
+<!-- MAIN WEBSITE -->
+<main id="website" style="display:none">
+
+<!-- WELCOME -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="small">WELCOME TO YOUR LITTLE WORLD</div>
+    <div class="rose">🌷</div>
+    <h1>Hello Isha!</h1>
+    <p>
+      My favourite Didu, my favourite Chipkali! 🦎
+      <br>
+      This little website isn't perfect,
+      but every corner is made with care.
+      <br>
+      Because you deserve a little happiness. 💗
+    </p>
+    <button class="btn"
+      onclick="document.getElementById('garden').scrollIntoView()">
+      Explore your world 🌸
+    </button>
+  </div>
+</div>
+
+<!-- ROSES -->
+<section id="garden">
+  <div class="section-title">A garden just for you 🌹</div>
+  <p class="subtitle">Your favourite flowers, in your favourite colours.</p>
+
+  <div class="card">
+    <div class="emoji">🌹🌷🌹</div>
+    <h3>Pink roses for my Didu</h3>
+    <p>
+      Some flowers make a garden beautiful,
+      and some people make life beautiful.
+      <br><br>
+      You are one of those people, Isha.
+      So here's a little garden of pink roses,
+      specially for you.
+      <br><br>
+      Keep blooming, Didu! 🌸
+    </p>
+  </div>
+</section>
+
+<!-- EMOTIONAL LETTER -->
+<section>
+  <div class="section-title">A letter from your little brother 💌</div>
+  <p class="subtitle">Read this whenever you feel low.</p>
+
+  <div class="letter">
+    <h2>Dear Isha Didu,</h2>
+
+    <p>
+      First of all, I know things might not be
+      going exactly the way you want right now.
+      Sometimes life gets confusing, situations
+      become difficult, and even a smile takes
+      a little extra effort.
+    </p>
+
+    <p>
+      But listen, Didu. You don't have to be
+      strong every single day. You don't have
+      to pretend that everything is okay.
+      It's perfectly fine to feel low sometimes.
+    </p>
+
+    <p>
+      Just remember that a difficult phase
+      is only a chapter, not your whole story.
+      There are so many beautiful moments
+      waiting for you.
+    </p>
+
+    <p>
+      Never underestimate yourself.
+      You are capable of so much more than
+      you realise. Please give yourself the
+      same kindness that you give to others.
+    </p>
+
+    <p>
+      I might not always have the perfect words
+      to make everything better, but I can
+      always remind you that you deserve
+      happiness, peace and respect.
+    </p>
+
+    <p>
+      Thank you for being such a lovely part
+      of my college memories. Keep being the
+      crazy, sweet and wonderful person you are.
+    </p>
+
+    <p>
+      And please, take care of yourself.
+      Eat properly, sleep properly, and don't
+      forget to smile.
+    </p>
+
+    <p>
+      A little reminder from your chhota bhai:
+      You are special, Didu. Never forget that.
+    </p>
+
+    <div class="signature">Your annoying little brother 💗</div>
+  </div>
+</section>
+
+<!-- MOOD CHECK -->
+<section>
+  <div class="section-title">How's my Didu today? 🥺</div>
+  <p class="subtitle">Choose your mood. No fake smiles allowed!</p>
+
+  <div class="mood-buttons">
+    <button onclick="showMood(1)">Feeling sad 🥺</button>
+    <button onclick="showMood(2)">Need a smile 🌸</button>
+    <button onclick="showMood(3)">Need a hug 🫂</button>
+    <button onclick="showMood(4)">Overthinking 😵‍💫</button>
+  </div>
+
+  <div id="mood-message"></div>
+</section>
+
+<!-- NOODLES -->
+<section class="noodles">
+  <div class="section-title">Emergency Happiness Kit 🍜</div>
+  <p class="subtitle">The official Chipkali recovery department!</p>
+
+  <div class="card">
+    <div class="emoji">🍜</div>
+    <h3>Rule No. 1: Noodles first!</h3>
+    <p>
+      Bad mood? Noodles.
+      <br>Stress? Noodles.
+      <br>Overthinking? Still noodles!
+      <br><br>
+      Some problems need solutions,
+      some need time, and some need a hot
+      bowl of noodles. 😂
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="emoji">🧸</div>
+    <h3>Rule No. 2: Be kind to yourself</h3>
+    <p>
+      You are allowed to rest.
+      You are allowed to say no.
+      You are allowed to start again.
+      <br><br>
+      One step at a time, Didu. 💗
+    </p>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section class="music">
+  <div class="section-title">Your music corner 🎧</div>
+  <p class="subtitle">For those moments when words aren't enough.</p>
+
+  <div class="card">
+    <div class="music-note">🎶</div>
+    <h3>Tu Hai Toh 💗</h3>
+    <p>
+      Your favourite song deserves a special place here.
+      Put on your headphones, relax and enjoy.
+    </p>
+    <br>
+    <a class="btn"
+      href="https://www.youtube.com/results?search_query=Tu+Hai+Toh+song"
+      target="_blank">
+      Play your favourite song 🎵
+    </a>
+  </div>
+</section>
+
+<!-- BIRTHDAY -->
+<section class="birthday">
+  <div class="section-title">A little birthday celebration 🎂</div>
+  <p class="subtitle">Belated, but full of love!</p>
+
+  <div class="card">
+    <div class="emoji">🎂🎀</div>
+    <h3>Happy Belated Birthday, Isha Didu!</h3>
+    <p>
+      Your birthday may have passed,
+      but good wishes never expire.
+      <br><br>
+      May this new year bring you endless
+      happiness, beautiful opportunities,
+      peace of mind and genuine people.
+      <br><br>
+      May you achieve everything you dream of
+      and get countless reasons to smile.
+      <br><br>
+      Keep growing, keep glowing and keep
+      being your wonderful self.
+      <br><br>
+      Lots of wishes from your little brother! 🌹
+    </p>
+  </div>
+</section>
+
+<!-- MEMORIES -->
+<section>
+  <div class="section-title">Little memories, big smiles 📸</div>
+  <p class="subtitle">A space for our favourite college memories.</p>
+
+  <div class="gallery">
+    <div class="photo-placeholder">🌸<br>Add a favourite photo</div>
+    <div class="photo-placeholder">💗<br>Add a funny memory</div>
+    <div class="photo-placeholder">🦋<br>Add a college moment</div>
+    <div class="photo-placeholder">🌷<br>Add another picture</div>
+  </div>
+  <p style="font-size:12px;margin-top:18px;color:#a77b8a">
+    You can replace these boxes with your pictures later.
+  </p>
+</section>
+
+<!-- SECRET GIFT -->
+<section class="gift-section">
+  <div class="section-title">One last surprise 🎁</div>
+  <p class="subtitle">Tap the gift, Didu. There's something inside!</p>
+
+  <div class="gift" onclick="openGift()">🎁</div>
+
+  <div id="secret">
+    <h2 class="script" style="font-size:36px">Hey, my favourite Didu! 💗</h2>
+    <p>
+      Oye Chipkali! 🦎
+      <br><br>
+      Life will not always be easy,
+      but please don't let difficult days
+      make you forget your worth.
+      <br><br>
+      Keep smiling, keep annoying me,
+      keep eating noodles and keep shining.
+      😂🌷
+      <br><br>
+      Thank you for being my Didu.
+      I'm genuinely glad our paths crossed.
+      <br><br>
+      This little website is just a reminder
+      that someone wishes good things for you.
+      <br><br>
+      <strong>You deserve all the happiness
+      in the world. Always take care! 🫂💗</strong>
+    </p>
+  </div>
+</section>
+
+<footer>
+  Made with love, roses and a little madness.
+  <br>
+  <strong>For Isha Didu – My Favourite Chipkali 🦎</strong>
+  <br>
+  Keep smiling, always! 🌷
+</footer>
+
+</main>
+
+<script>
+function unlock(){
+  const pass=document.getElementById("password").value;
+
+  if(pass==="bappa"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("website").style.display="block";
+    window.scrollTo(0,0);
+  }else{
+    document.getElementById("error").innerHTML=
+      "Oops! Wrong password, Didu! 😂 Try again 💗";
+  }
+}
+
+document.getElementById("password").addEventListener("keydown",function(e){
+  if(e.key==="Enter") unlock();
+});
+
+function showMood(choice){
+  const box=document.getElementById("mood-message");
+
+  const messages={
+    1:"Areee meri Didu! 🥺💗 It's okay to feel low. You don't need to figure out everything today. Take a breath. I'm sending you a big virtual hug! 🫂",
+    2:"That's my Didu! 🌸 Keep that beautiful smile alive. And remember, you are much stronger than the problems trying to trouble you.",
+    3:"A very tight virtual hug for you! 🫂 No explanations needed, no pressure to smile. Just take a break and be kind to yourself.",
+    4:"Oye Chipkali! 😂 Stop fighting all those imaginary battles in your head. One thing at a time. You don't need to solve your whole life today. 💗"
+  };
+
+  box.style.display="block";
+  box.innerHTML=messages[choice];
+}
+
+function openGift(){
+  const box=document.getElementById("secret");
+  box.style.display=box.style.display==="block"?"none":"block";
+  if(box.style.display==="block"){
+    box.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+}
+
+function createPetal(){
+  if(document.getElementById("website").style.display==="none")return;
+
+  const petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerHTML=["🌸","🌷","💗","🌹"][Math.floor(Math.random()*4)];
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.fontSize=(15+Math.random()*15)+"px";
+  petal.style.animationDuration=(5+Math.random()*5)+"s";
+
+  document.body.appendChild(petal);
+  setTimeout(()=>petal.remove(),10000);
+}
+
+setInterval(createPetal,900);
+</script>
+
+</body>
+</html>
